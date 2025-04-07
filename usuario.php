@@ -19,7 +19,6 @@ class Usuario
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
-        
     }
 
     public function obtenerUsuario($id)
@@ -34,7 +33,8 @@ class Usuario
         //se optiene el usuario por id
     }
 
-    public function agregarUsuario($primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $edad, $fecha_nacimiento, $telefono, $correo, $direccion) {
+    public function agregarUsuario($primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $edad, $fecha_nacimiento, $telefono, $correo, $direccion)
+    {
         try {
             $sql = "INSERT INTO usuarios (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, edad, fecha_nacimiento, telefono, correo, direccion)
                     VALUES (:primer_nombre, :segundo_nombre, :primer_apellido, :segundo_apellido, :edad, :fecha_nacimiento, :telefono, :correo, :direccion)";
@@ -63,6 +63,29 @@ class Usuario
 
     public function eliminarUsuario($id)
     {
-        // Lógica para eliminar un usuario
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE id = ?");
+            $stmt->execute([$id]);
+            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$usuario) {
+                echo "Usuario con ID $id no existe.\n";
+                return false;
+            }
+
+            echo "¿Estás seguro que deseas eliminar al usuario: {$usuario['primer_nombre']} {$usuario['primer_apellido']}? (si/no): ";
+            $confirmacion = strtolower(trim(readline()));
+            if ($confirmacion !== 'si') {
+                echo "Operación cancelada.\n";
+                return false;
+            }
+            $stmt = $this->conn->prepare("DELETE FROM usuarios WHERE id = ?");
+            $stmt->execute([$id]);
+            echo "Usuario eliminado correctamente.\n";
+            return true;
+        } catch (PDOException $e) {
+            echo "Error al eliminar: " . $e->getMessage() . "\n";
+            return false;
+        }
     }
 }
