@@ -21,9 +21,10 @@ class Usuario
         // Lógica para obtener un usuario por ID
     }
 
-    public function crearUsuario()
+    public function crearUsuario( )
     {
         // Lógica para insertar usuario
+        
     }
 
     public function actualizarUsuario()
