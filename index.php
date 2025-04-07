@@ -51,8 +51,42 @@ while (true) {
 
         case "3":
             echo "obtener usuario.\n";
+            break;
         case "4":
-            echo "actualizar usuario.\n";
+            echo "Seleccione el ID del usuario a actualizar: ";
+            $id = (int)readline();
+            $usuarioData = $usuario->obtenerUsuario($id);
+            if ($usuarioData) {
+                echo "Usuario encontrado\n";
+                echo "Ingrese los nuevos datos (dejar en blanco para no cambiar):\n";
+                echo "Primer nombre: ";
+                $pn = readline();
+                echo "Segundo nombre (opcional): ";
+                $sn = readline();
+                echo "Primer apellido: ";
+                $pa = readline();
+                echo "Segundo apellido (opcional): ";
+                $sa = readline();
+                echo "Edad: ";
+                $edad = (int)readline();
+                echo "Fecha nacimiento (YYYY-MM-DD): ";
+                $fn = readline();
+                echo "Teléfono: ";
+                $tel = readline();
+                echo "Correo: ";
+                $correo = readline();
+                echo "Dirección: ";
+                $dir = readline();
+
+                
+                $usuario->actualizarUsuario($id, $pn, $sn, $pa, $sa, $edad, $fn, $tel, $correo, $dir);
+                echo "✅ Usuario actualizado correctamente en la base de datos.\n";
+            } else {
+                echo "❗ Usuario no encontrado.\n";
+            }
+            
+            
+            
             break;
         case "5":
             echo ("lista de usuarios: ") . "\n";

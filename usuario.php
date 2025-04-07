@@ -56,9 +56,26 @@ class Usuario
             return false;
         }
     }
-    public function actualizarUsuario()
+    public function actualizarUsuario($id, $primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $edad, $fecha_nacimiento, $telefono, $correo, $direccion)
     {
         // Lógica para actualizar un usuario
+        $query = "UPDATE usuarios SET primer_nombre = :primer_nombre, segundo_nombre = :segundo_nombre, primer_apellido = :primer_apellido, segundo_apellido = :segundo_apellido, edad = :edad, fecha_nacimiento = :fecha_nacimiento, telefono = :telefono, correo = :correo, direccion = :direccion WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':primer_nombre', $primer_nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':segundo_nombre', $segundo_nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':primer_apellido', $primer_apellido, PDO::PARAM_STR);
+        $stmt->bindParam(':segundo_apellido', $segundo_apellido, PDO::PARAM_STR);
+        $stmt->bindParam(':edad', $edad, PDO::PARAM_INT);
+        $stmt->bindParam(':fecha_nacimiento', $fecha_nacimiento, PDO::PARAM_STR);
+        $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
+        $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
+        $stmt->bindParam(':direccion', $direccion, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+
+
     }
 
     public function eliminarUsuario($id)
