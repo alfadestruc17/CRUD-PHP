@@ -31,6 +31,7 @@ class Usuario
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
+        //se optiene el usuario por id
     }
 
     public function crearUsuario()
