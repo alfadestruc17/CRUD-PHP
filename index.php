@@ -2,7 +2,8 @@
 
 require_once 'Usuario.php';
 
-function menu() {
+function menu()
+{
     echo "=== Menú ===\n";
     echo "1. crear usuario\n";
     echo "2. listar usuarios\n";
@@ -88,7 +89,18 @@ while (true) {
             
             break;
         case "5":
-            echo "eliminar usuario.\n";
+            echo ("lista de usuarios: ") . "\n";
+            $usuarios = $usuario->listarUsuarios();
+            foreach ($usuarios as $user) {
+                echo "ID: {$user['id']}, Nombre completo: {$user['primer_nombre']} {$user['segundo_nombre']} {$user['primer_apellido']} {$user['segundo_apellido']}\n";
+            }
+            echo "Ingrese el ID del usuario a eliminar: ";
+            $id = readline();
+            if (!is_numeric($id)) {
+                echo "ID inválido. Debe ser un número.\n";
+                break;
+            }
+            $usuario->eliminarUsuario((int)$id);
             break;
         case "6":
             echo "Saliendo...\n";
