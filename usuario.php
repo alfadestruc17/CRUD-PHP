@@ -14,6 +14,12 @@ class Usuario
     public function listarUsuarios()
     {
         // Lógica para obtener todos los usuarios
+        $query = "SELECT * FROM usuarios";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+        
     }
 
     public function obtenerUsuario($id)
