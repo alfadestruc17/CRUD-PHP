@@ -41,7 +41,7 @@ while (true) {
             $dir = readline();
 
             $resultado = $usuario->agregarUsuario($pn, $sn, $pa, $sa, $edad, $fn, $tel, $correo, $dir);
-            echo $resultado ? "✅ Usuario agregado correctamente.\n" : "❌ No se pudo agregar el usuario.\n";
+            echo $resultado ? "✅ Usuario agregado correctamente en la base de datos.\n" : "❌ No se pudo agregar el usuario en la base de datos.\n";
             break;
 
         case "2":
