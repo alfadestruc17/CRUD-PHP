@@ -34,9 +34,10 @@ class Usuario
         //se optiene el usuario por id
     }
 
-    public function crearUsuario()
+    public function crearUsuario( )
     {
         // Lógica para insertar usuario
+        
     }
 
     public function actualizarUsuario()
