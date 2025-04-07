@@ -46,11 +46,15 @@ while (true) {
             break;
 
         case "2":
-            $usuario->listarUsuarios();
+            echo "Lista de usuarios:\n";
+            $usuarios = $usuario->listarUsuarios();
+            foreach ($usuarios as $user) {
+                echo "ID: {$user['id']}, Nombre completo: {$user['primer_nombre']} {$user['segundo_nombre']} {$user['primer_apellido']} {$user['segundo_apellido']}, Edad: {$user['edad']}, Teléfono: {$user['telefono']}\n";
+            }
             break;
-
         case "3":
             echo "obtener usuario.\n";
+            break;
         case "4":
             echo "actualizar usuario.\n";
             break;
