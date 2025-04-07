@@ -25,6 +25,12 @@ class Usuario
     public function obtenerUsuario($id)
     {
         // Lógica para obtener un usuario por ID
+        $query = "SELECT * FROM usuarios WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
     }
 
     public function crearUsuario( )
