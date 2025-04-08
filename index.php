@@ -53,7 +53,16 @@ while (true) {
             }
             break;
         case "3":
-            echo "obtener usuario.\n";
+            echo "Ingrese el ID del usuario a obtener: ";
+            $id = (int)readline();
+            $usuarioData = $usuario->obtenerUsuario($id);
+            if ($usuarioData) {
+                echo "Usuario encontrado:\n";
+                echo "ID: {$usuarioData['id']}, Nombre completo: {$usuarioData['primer_nombre']} {$usuarioData['segundo_nombre']} {$usuarioData['primer_apellido']} {$usuarioData['segundo_apellido']}, Edad: {$usuarioData['edad']}, Teléfono: {$usuarioData['telefono']}\n";
+            } else {
+                echo "❗ Usuario no encontrado.\n";
+            }
+
             break;
         case "4":
             echo "Seleccione el ID del usuario a actualizar: ";
