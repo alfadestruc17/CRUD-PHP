@@ -67,21 +67,30 @@ while (true) {
         case "2":
             echo "Lista de usuarios:\n";
             $usuarios = $usuario->listarUsuarios();
+
             foreach ($usuarios as $user) {
-                echo "ID: {$user['id']}, Nombre completo: {$user['primer_nombre']} {$user['segundo_nombre']} {$user['primer_apellido']} {$user['segundo_apellido']}, Fecha de nacimiento: {$user['fecha_nacimiento']}, Teléfono: {$user['telefono']}\n";
+                $edad = $usuario->getEdad($user['fecha_nacimiento']);
+                echo "ID: {$user['id']}, Nombre completo: {$user['primer_nombre']} {$user['segundo_nombre']} {$user['primer_apellido']} {$user['segundo_apellido']}, Edad: {$edad}, Teléfono: {$user['telefono']}\n";
             }
             break;
         case "3":
             echo "Ingrese el ID del usuario a obtener: ";
             $id = (int)readline();
+
             $usuarioData = $usuario->obtenerUsuario($id);
+
             if ($usuarioData) {
+                if ($usuarioData['fecha_nacimiento']) {
+                    $edad = $usuario->getEdad($usuarioData['fecha_nacimiento']);
+                } else {
+                    $edad = "No disponible";
+                }
+
                 echo "Usuario encontrado:\n";
-                echo "ID: {$usuarioData['id']}, Nombre completo: {$usuarioData['primer_nombre']} {$usuarioData['segundo_nombre']} {$usuarioData['primer_apellido']} {$usuarioData['segundo_apellido']}, Fecha de nacimiento: {$usuarioData['fecha_nacimiento']}, Teléfono: {$usuarioData['telefono']}\n";
+                echo "ID: {$usuarioData['id']}, Nombre completo: {$usuarioData['primer_nombre']} {$usuarioData['segundo_nombre']} {$usuarioData['primer_apellido']} {$usuarioData['segundo_apellido']}, Edad: {$edad}, Teléfono: {$usuarioData['telefono']}\n";
             } else {
                 echo "❗ Usuario no encontrado.\n";
             }
-
             break;
         case "4":
             echo "Seleccione el ID del usuario a actualizar: ";

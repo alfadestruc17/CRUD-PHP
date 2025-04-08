@@ -23,15 +23,13 @@ class Usuario
 
     public function obtenerUsuario($id)
     {
-        // Lógica para obtener un usuario por ID
-        $query = "SELECT * FROM usuarios WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result;
-        //se optiene el usuario por id
+        $sql = "SELECT * FROM usuarios WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $usuario ?: null;
     }
+
 
     public function agregarUsuario($primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $fecha_nacimiento, $telefono, $correo, $direccion)
     {
@@ -118,5 +116,12 @@ class Usuario
     {
         $fecha_regex = "/^\d{4}-\d{2}-\d{2}$/";
         return preg_match($fecha_regex, $fecha);
+    }
+    public function getEdad($fecha_nacimiento)
+    {
+        $fecha_nacimiento = new DateTime($fecha_nacimiento);
+        $hoy = new DateTime();
+        $edad = $hoy->diff($fecha_nacimiento)->y;
+        return $edad;
     }
 }
