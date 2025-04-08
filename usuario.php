@@ -112,6 +112,7 @@ class Usuario
     }
     public function validarNombre($nombre)
     {
+        
         return !empty(trim($nombre));
     }
     public function validarFecha($fecha)
@@ -119,4 +120,11 @@ class Usuario
         $fecha_regex = "/^\d{4}-\d{2}-\d{2}$/";
         return preg_match($fecha_regex, $fecha);
     }
+
+    public function validarNombreCompleto($nombre_completo)
+    {
+        $nombre_regex = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+$/";
+        return preg_match($nombre_regex, $nombre_completo);
+    }
+
 }
