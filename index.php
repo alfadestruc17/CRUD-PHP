@@ -24,10 +24,18 @@ while (true) {
         case "1":
             echo "Primer nombre: ";
             $pn = readline();
+            if (empty($pn)) {
+                echo "❗ El primer nombre es obligatorio.\n";
+                break;
+            }
             echo "Segundo nombre (opcional): ";
             $sn = readline();
             echo "Primer apellido: ";
             $pa = readline();
+            if (empty($pa)) {
+                echo "❗ El primer apellido es obligatorio.\n";
+                break;
+            }
             echo "Segundo apellido (opcional): ";
             $sa = readline();
             echo "Edad: ";
@@ -38,6 +46,10 @@ while (true) {
             $tel = readline();
             echo "Correo: ";
             $correo = readline();
+            if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+                echo "❗ Correo inválido.\n";
+                break;
+            }
             echo "Dirección: ";
             $dir = readline();
 
