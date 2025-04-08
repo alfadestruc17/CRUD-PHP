@@ -28,16 +28,32 @@ while (true) {
                 echo "❌ El primer nombre no puede estar vacío.\n";
                 break;
             }
+            if (!$usuario->validarNombreCompleto($pn)) {
+                echo "❗ El primer nombre solo puede contener letras.\n";
+                break;
+            }
             echo "Segundo nombre (opcional): ";
             $sn = readline();
+            if ($sn && !$usuario->validarNombreCompleto($sn)) {
+                echo "❗ El segundo nombre solo puede contener letras.\n";
+                break;
+            }
             echo "Primer apellido: ";
             $pa = trim(readline());
             if (!$usuario->validarNombre($pa)) {
                 echo "❌ El primer apellido no puede estar vacío.\n";
                 break;
             }
+            if (!$usuario->validarNombreCompleto($pa)) {
+                echo "❗ El primer apellido solo puede contener letras.\n";
+                break;
+            }
             echo "Segundo apellido (opcional): ";
             $sa = readline();
+            if ($sa && !$usuario->validarNombreCompleto($sa)) {
+                echo "❗ El segundo apellido solo puede contener letras.\n";
+                break;
+            }
             echo "Fecha nacimiento (YYYY-MM-DD): ";
             $fn = trim(readline());
             if (!$usuario->validarFecha($fn)) {
@@ -49,6 +65,10 @@ while (true) {
             $tel = trim(readline());
             if (!$usuario->validarTelefono($tel)) {
                 echo "❗ Teléfono inválido.\n";
+                break;
+            }
+            if (!preg_match("/^\d{10}$/", $tel)) {
+                echo "❗ El teléfono debe contener 10 dígitos y no pueden ser letras.\n";
                 break;
             }
             echo "Correo: ";
