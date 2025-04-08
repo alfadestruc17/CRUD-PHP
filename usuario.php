@@ -33,18 +33,17 @@ class Usuario
         //se optiene el usuario por id
     }
 
-    public function agregarUsuario($primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $edad, $fecha_nacimiento, $telefono, $correo, $direccion)
+    public function agregarUsuario($primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $fecha_nacimiento, $telefono, $correo, $direccion)
     {
         try {
-            $sql = "INSERT INTO usuarios (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, edad, fecha_nacimiento, telefono, correo, direccion)
-                    VALUES (:primer_nombre, :segundo_nombre, :primer_apellido, :segundo_apellido, :edad, :fecha_nacimiento, :telefono, :correo, :direccion)";
+            $sql = "INSERT INTO usuarios (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento, telefono, correo, direccion)
+                    VALUES (:primer_nombre, :segundo_nombre, :primer_apellido, :segundo_apellido, :fecha_nacimiento, :telefono, :correo, :direccion)";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([
                 ':primer_nombre' => $primer_nombre,
                 ':segundo_nombre' => $segundo_nombre,
                 ':primer_apellido' => $primer_apellido,
                 ':segundo_apellido' => $segundo_apellido,
-                ':edad' => $edad,
                 ':fecha_nacimiento' => $fecha_nacimiento,
                 ':telefono' => $telefono,
                 ':correo' => $correo,
@@ -56,17 +55,16 @@ class Usuario
             return false;
         }
     }
-    public function actualizarUsuario($id, $primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $edad, $fecha_nacimiento, $telefono, $correo, $direccion)
+    public function actualizarUsuario($id, $primer_nombre, $segundo_nombre, $primer_apellido, $segundo_apellido, $fecha_nacimiento, $telefono, $correo, $direccion)
     {
         // Lógica para actualizar un usuario
-        $query = "UPDATE usuarios SET primer_nombre = :primer_nombre, segundo_nombre = :segundo_nombre, primer_apellido = :primer_apellido, segundo_apellido = :segundo_apellido, edad = :edad, fecha_nacimiento = :fecha_nacimiento, telefono = :telefono, correo = :correo, direccion = :direccion WHERE id = :id";
+        $query = "UPDATE usuarios SET primer_nombre = :primer_nombre, segundo_nombre = :segundo_nombre, primer_apellido = :primer_apellido, segundo_apellido = :segundo_apellido, fecha_nacimiento = :fecha_nacimiento, telefono = :telefono, correo = :correo, direccion = :direccion WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':primer_nombre', $primer_nombre, PDO::PARAM_STR);
         $stmt->bindParam(':segundo_nombre', $segundo_nombre, PDO::PARAM_STR);
         $stmt->bindParam(':primer_apellido', $primer_apellido, PDO::PARAM_STR);
         $stmt->bindParam(':segundo_apellido', $segundo_apellido, PDO::PARAM_STR);
-        $stmt->bindParam(':edad', $edad, PDO::PARAM_INT);
         $stmt->bindParam(':fecha_nacimiento', $fecha_nacimiento, PDO::PARAM_STR);
         $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
         $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
@@ -74,8 +72,6 @@ class Usuario
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
-
-
     }
 
     public function eliminarUsuario($id)
@@ -104,5 +100,23 @@ class Usuario
             echo "Error al eliminar: " . $e->getMessage() . "\n";
             return false;
         }
+    }
+    public function validarTelefono($telefono)
+    {
+        return !empty(trim($telefono));
+    }
+
+    public function validarCorreo($correo)
+    {
+        return filter_var($correo, FILTER_VALIDATE_EMAIL);
+    }
+    public function validarNombre($nombre)
+    {
+        return !empty(trim($nombre));
+    }
+    public function validarFecha($fecha)
+    {
+        $fecha_regex = "/^\d{4}-\d{2}-\d{2}$/";
+        return preg_match($fecha_regex, $fecha);
     }
 }
